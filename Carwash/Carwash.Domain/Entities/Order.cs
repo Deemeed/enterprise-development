@@ -34,4 +34,9 @@ public class Order
     /// Дата и время начала заказа
     /// </summary>
     public required DateTime StartTime { get; set; }
+
+    /// <summary>
+    /// Дата и время окончания заказа
+    /// </summary>
+    public DateTime EndTime => StartTime.AddMinutes(Service.DurationInMinutes);
 }
