@@ -9,7 +9,7 @@ namespace Carwash.Domain.Data;
 public static class DataSeed
 {
     /// <summary>
-    /// Временя, относительно которого формируются тестовые данные.
+    /// Время, относительно которого формируются тестовые данные.
     /// </summary>
     public static DateTime CurrentTime { get; } =
         new(2026, 9, 24, 12, 0, 0);
