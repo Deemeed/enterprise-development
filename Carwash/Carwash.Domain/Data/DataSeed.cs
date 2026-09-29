@@ -11,8 +11,7 @@ public static class DataSeed
     /// <summary>
     /// Время, относительно которого формируются тестовые данные.
     /// </summary>
-    public static DateTime CurrentTime { get; } =
-        new(2026, 9, 24, 12, 0, 0);
+    public static DateTime CurrentTime { get; } = new(2026, 9, 24, 12, 0, 0);
 
     /// <summary>
     /// Клиенты
@@ -79,49 +78,57 @@ public static class DataSeed
         {
             Id = 1,
             LicensePlate = "А111АА",
-            Brand = "BMW"
+            Brand = "BMW",
+            Client = Clients[0]
         },
         new Car
         {
             Id = 2,
             LicensePlate = "В222ВВ",
-            Brand = "Toyota"
+            Brand = "Toyota",
+            Client = Clients[1]
         },
         new Car
         {
             Id = 3,
             LicensePlate = "С333СС",
-            Brand = "Mercedes-Benz"
+            Brand = "Mercedes-Benz",
+            Client = Clients[2]
         },
         new Car
         {
             Id = 4,
             LicensePlate = "Е444ЕЕ",
-            Brand = "Audi"
+            Brand = "Audi",
+            Client = Clients[3]
         },
         new Car
         {
             Id = 5,
             LicensePlate = "К555КК",
-            Brand = "Lexus"
+            Brand = "Lexus",
+            Client = Clients[4]
         },
         new Car
         {
             Id = 6,
             LicensePlate = "М666ММ",
-            Brand = "Volkswagen"
+            Brand = "Volkswagen",
+            Client = Clients[5]
         },
         new Car
         {
             Id = 7,
             LicensePlate = "Н777НН",
-            Brand = "Volvo"
+            Brand = "Volvo",
+            Client = Clients[6]
         },
         new Car
         {
             Id = 8,
             LicensePlate = "О888ОО",
-            Brand = "Range Rover"
+            Brand = "Range Rover",
+            Client = Clients[0]
         }
     ];
 
@@ -402,17 +409,4 @@ public static class DataSeed
             StartTime = CurrentTime.AddMinutes(-15)
         }
     ];
-
-    static DataSeed()
-    {
-        Clients[0].Cars.Add(Cars[0]);
-        Clients[0].Cars.Add(Cars[7]);
-
-        Clients[1].Cars.Add(Cars[1]);
-        Clients[2].Cars.Add(Cars[2]);
-        Clients[3].Cars.Add(Cars[3]);
-        Clients[4].Cars.Add(Cars[4]);
-        Clients[5].Cars.Add(Cars[5]);
-        Clients[6].Cars.Add(Cars[6]);
-    }
 }

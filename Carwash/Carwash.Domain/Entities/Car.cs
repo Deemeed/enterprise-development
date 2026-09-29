@@ -19,4 +19,9 @@ public class Car
     /// Марка автомобиля
     /// </summary>
     public required string Brand { get; set; }
+
+    /// <summary>
+    /// Клиент, которому принадлежит автомобиль
+    /// </summary>
+    public required Client Client { get; set; }
 }

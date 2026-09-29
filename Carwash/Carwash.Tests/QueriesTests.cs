@@ -1,6 +1,4 @@
-﻿using Carwash.Domain.Entities;
-
-namespace Carwash.Tests;
+﻿namespace Carwash.Tests;
 
 /// <summary>
 /// Тесты
@@ -116,22 +114,14 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     {
         const int boxNumber = 1;
         var currentTime = fixture.CurrentTime;
+        var expectedReleaseTime = new DateTime(2026, 9, 24, 13, 10, 0);
 
         var releaseTime = fixture.Orders
             .Where(order =>
                 order.BoxNumber == boxNumber &&
                 order.StartTime <= currentTime &&
                 order.EndTime > currentTime)
-            .Select(order => order.EndTime)
-            .Max();
-
-        var expectedReleaseTime = new DateTime(
-            2026,
-            9,
-            24,
-            13,
-            10,
-            0);
+            .Max(order => order.EndTime);
 
         Assert.Equal(expectedReleaseTime, releaseTime);
     }
