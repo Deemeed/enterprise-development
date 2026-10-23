@@ -21,6 +21,11 @@ public class Car
     public required string Brand { get; set; }
 
     /// <summary>
+    /// Идентификатор клиента, которому принадлежит автомобиль
+    /// </summary>
+    public required int ClientId { get; set; }
+
+    /// <summary>
     /// Клиент, которому принадлежит автомобиль
     /// </summary>
     public required Client Client { get; set; }
