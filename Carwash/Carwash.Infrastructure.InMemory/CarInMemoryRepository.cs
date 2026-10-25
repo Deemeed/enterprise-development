@@ -3,11 +3,15 @@ using Carwash.Domain.Entities;
 
 namespace Carwash.Infrastructure.InMemory;
 
-internal class CarInMemoryRepository : IRepository<Car, int>
+/// <summary>
+/// Имплементация репозитория для автомобилей
+/// </summary>
+public class CarInMemoryRepository : IRepository<Car, int>
 {
     private readonly List<Car> _cars = [];
     private int _lastId = 1;
 
+    /// <inheritdoc/>
     public Task<Car> Create(Car entity)
     {
         entity.Id = _lastId++;
@@ -15,6 +19,7 @@ internal class CarInMemoryRepository : IRepository<Car, int>
         return Task.FromResult(entity);
     }
 
+    /// <inheritdoc/>
     public Task<bool> Delete(int entityId)
     {
         var car = Read(entityId).Result;
@@ -25,17 +30,20 @@ internal class CarInMemoryRepository : IRepository<Car, int>
         return Task.FromResult(result);
     }
 
+    /// <inheritdoc/>
     public Task<List<Car>> ReadAll()
     {
         return Task.FromResult(_cars.ToList());
     }
 
+    /// <inheritdoc/>
     public Task<Car?> Read(int entityId)
     {
         var car = _cars.FirstOrDefault(c => c.Id == entityId);
         return Task.FromResult(car);
     }
 
+    /// <inheritdoc/>
     public Task<Car> Update(Car entity)
     {
         Delete(entity.Id);

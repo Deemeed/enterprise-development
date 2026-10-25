@@ -5,8 +5,13 @@ using Carwash.Domain.Entities;
 
 namespace Carwash.Application.Services;
 
+/// <summary>
+/// Служба для CRUD-операций над клиентами
+/// </summary>
+/// <param name="clientRepository">Репозиторий клиентов</param>
 public class ClientService(IRepository<Client, int> clientRepository) : IApplicationService<ClientDto, ClientCreateUpdateDto, int>
 {
+    /// <inheritdoc/>
     public async Task<ClientDto> Create(ClientCreateUpdateDto dto)
     {
         var client = Mapper.Map(dto);
@@ -16,8 +21,10 @@ public class ClientService(IRepository<Client, int> clientRepository) : IApplica
         return Mapper.Map(result);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Delete(int id) => await clientRepository.Delete(id);
 
+    /// <inheritdoc/>
     public async Task<ClientDto?> Read(int id)
     {
         var client = await clientRepository.Read(id);
@@ -28,8 +35,10 @@ public class ClientService(IRepository<Client, int> clientRepository) : IApplica
         return Mapper.Map(client);
     }
 
+    /// <inheritdoc/>
     public async Task<IList<ClientDto>> ReadAll() => Mapper.Map(await clientRepository.ReadAll());
 
+    /// <inheritdoc/>
     public async Task<ClientDto> Update(ClientCreateUpdateDto dto, int id)
     {
         var client = Mapper.Map(dto);

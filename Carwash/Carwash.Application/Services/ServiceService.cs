@@ -5,8 +5,13 @@ using Carwash.Application.Contracts.Services;
 
 namespace Carwash.Application.Services;
 
-internal class ServiceService(IRepository<Service, int> serviceRepository) : IApplicationService<ServiceDto, ServiceCreateUpdateDto, int>
+/// <summary>
+/// Служба для CRUD-операций над услугами
+/// </summary>
+/// <param name="serviceRepository">Репозиторий услуг</param>
+public class ServiceService(IRepository<Service, int> serviceRepository) : IApplicationService<ServiceDto, ServiceCreateUpdateDto, int>
 {
+    /// <inheritdoc/>
     public async Task<ServiceDto> Create(ServiceCreateUpdateDto dto)
     {
         var service = Mapper.Map(dto);
@@ -16,8 +21,10 @@ internal class ServiceService(IRepository<Service, int> serviceRepository) : IAp
         return Mapper.Map(result);
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Delete(int id) => await serviceRepository.Delete(id);
 
+    /// <inheritdoc/>
     public async Task<ServiceDto?> Read(int id)
     {
         var service = await serviceRepository.Read(id);
@@ -28,8 +35,10 @@ internal class ServiceService(IRepository<Service, int> serviceRepository) : IAp
         return Mapper.Map(service);
     }
 
+    /// <inheritdoc/>
     public async Task<IList<ServiceDto>> ReadAll() => Mapper.Map(await serviceRepository.ReadAll());
 
+    /// <inheritdoc/>
     public async Task<ServiceDto> Update(ServiceCreateUpdateDto dto, int id)
     {
         var service = Mapper.Map(dto);
