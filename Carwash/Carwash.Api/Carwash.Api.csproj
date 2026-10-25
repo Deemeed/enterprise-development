@@ -1,13 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.18.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carwash.Application.Contracts\Carwash.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Carwash.Application\Carwash.Application.csproj" />
+    <ProjectReference Include="..\Carwash.Domain\Carwash.Domain.csproj" />
+    <ProjectReference Include="..\Carwash.Infrastructure.InMemory\Carwash.Infrastructure.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

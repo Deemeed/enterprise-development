@@ -7,4 +7,9 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Carwash.Application.Contracts\Carwash.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Carwash.Domain\Carwash.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Carwash.Domain;
+using Carwash.Domain.Data;
 using Carwash.Domain.Entities;
 
 namespace Carwash.Infrastructure.InMemory;
@@ -8,8 +9,8 @@ namespace Carwash.Infrastructure.InMemory;
 /// </summary>
 public class OrderInMemoryRepository : IRepository<Order, int>
 {
-    private readonly List<Order> _orders = [];
-    private int _lastId = 1;
+    private readonly List<Order> _orders = DataSeed.Orders;
+    private int _lastId = DataSeed.Orders.Count + 1;
 
     /// <inheritdoc/>
     public Task<Order> Create(Order entity)
