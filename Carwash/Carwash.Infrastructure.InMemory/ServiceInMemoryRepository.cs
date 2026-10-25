@@ -6,9 +6,11 @@ namespace Carwash.Infrastructure.InMemory;
 internal class ServiceInMemoryRepository : IRepository<Service, int>
 {
     private readonly List<Service> _services = [];
+    private int _lastId = 1;
 
     public Task<Service> Create(Service entity)
     {
+        entity.Id = _lastId++;
         _services.Add(entity);
         return Task.FromResult(entity);
     }
@@ -23,7 +25,7 @@ internal class ServiceInMemoryRepository : IRepository<Service, int>
         return Task.FromResult(result);
     }
 
-    public Task<List<Service>> GetAll()
+    public Task<List<Service>> ReadAll()
     {
         return Task.FromResult(_services.ToList());
     }

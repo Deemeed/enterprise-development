@@ -6,9 +6,11 @@ namespace Carwash.Infrastructure.InMemory;
 public class ClientInMemoryRepository : IRepository<Client, int>
 {
     private readonly List<Client> _clients = [];
+    private int _lastId = 1;
 
     public Task<Client> Create(Client entity)
     {
+        entity.Id = _lastId++;
         _clients.Add(entity);
         return Task.FromResult(entity);
     }
@@ -23,7 +25,7 @@ public class ClientInMemoryRepository : IRepository<Client, int>
         return Task.FromResult(result);
     }
 
-    public Task<List<Client>> GetAll()
+    public Task<List<Client>> ReadAll()
     {
         return Task.FromResult(_clients.ToList());
     }

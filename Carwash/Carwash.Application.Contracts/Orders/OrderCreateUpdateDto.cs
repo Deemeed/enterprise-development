@@ -10,9 +10,9 @@
 /// <param name="StartTime">Время начала заказа</param>
 public record OrderCreateUpdateDto
 (
-    int? ClientId,
-    int? CarId,
-    int? ServiceId,
-    int? BoxNumber,
+    int ClientId,
+    int CarId,
+    int ServiceId,
+    int BoxNumber,
     DateTime StartTime
 );

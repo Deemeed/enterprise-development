@@ -25,7 +25,7 @@ public interface IRepository<TEntity, TKey>
     /// Получение списка всех сущностей
     /// </summary>
     /// <returns>Список сущностей</returns>
-    public Task<List<TEntity>> GetAll();
+    public Task<List<TEntity>> ReadAll();
 
     /// <summary>
     /// Обновление сущности

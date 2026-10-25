@@ -35,11 +35,11 @@ public interface IApplicationService<TDto, TCreateUpdateDto, TKey>
     /// </summary>
     /// <param name="id">Идентификатор DTO</param>
     /// <returns>DTO</returns>
-    public Task<TDto?> Get(TKey id);
+    public Task<TDto?> Read(TKey id);
 
     /// <summary>
     /// Получение всех DTO
     /// </summary>
     /// <returns>Список DTO</returns>
-    public Task<IList<TDto>> GetAll();
+    public Task<IList<TDto>> ReadAll();
 }
