@@ -47,8 +47,16 @@ public class ServiceInMemoryRepository : IRepository<Service, int>
     /// <inheritdoc/>
     public Task<Service> Update(Service entity)
     {
-        Delete(entity.Id);
-        Create(entity);
-        return Task.FromResult(entity);
+        var service = Read(entity.Id).Result;
+
+        if (service == null)
+            return Create(entity);
+
+        service.Name = entity.Name;
+        service.Price = entity.Price;
+        service.Category = entity.Category;
+        service.DurationInMinutes = entity.DurationInMinutes;
+
+        return Task.FromResult(service);
     }
 }

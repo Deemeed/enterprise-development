@@ -47,8 +47,20 @@ public class OrderInMemoryRepository : IRepository<Order, int>
     /// <inheritdoc/>
     public Task<Order> Update(Order entity)
     {
-        Delete(entity.Id);
-        Create(entity);
-        return Task.FromResult(entity);
+        var order = Read(entity.Id).Result;
+
+        if (order == null)
+            return Create(entity);
+
+        order.ClientId = entity.ClientId;
+        order.Client = entity.Client;
+        order.CarId = entity.CarId;
+        order.Car = entity.Car;
+        order.ServiceId = entity.ServiceId;
+        order.Service = entity.Service;
+        order.BoxNumber = entity.BoxNumber;
+        order.StartTime = entity.StartTime;
+
+        return Task.FromResult(order);
     }
 }

@@ -47,8 +47,16 @@ public class CarInMemoryRepository : IRepository<Car, int>
     /// <inheritdoc/>
     public Task<Car> Update(Car entity)
     {
-        Delete(entity.Id);
-        Create(entity);
-        return Task.FromResult(entity);
+        var car = Read(entity.Id).Result;
+
+        if (car == null)
+            return Create(entity);
+
+        car.LicensePlate = entity.LicensePlate;
+        car.Brand = entity.Brand;
+        car.ClientId = entity.ClientId;
+        car.Client = entity.Client;
+
+        return Task.FromResult(car);
     }
 }

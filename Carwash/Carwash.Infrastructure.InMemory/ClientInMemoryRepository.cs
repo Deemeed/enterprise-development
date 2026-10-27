@@ -47,8 +47,15 @@ public class ClientInMemoryRepository : IRepository<Client, int>
     /// <inheritdoc/>
     public Task<Client> Update(Client entity)
     {
-        Delete(entity.Id);
-        Create(entity);
-        return Task.FromResult(entity);
+        var client = Read(entity.Id).Result;
+
+        if (client == null)
+            return Create(client);
+
+        client.FullName = entity.FullName;
+        client.PhoneNumber = entity.PhoneNumber;
+        client.Cars = entity.Cars;
+
+        return Task.FromResult(client);
     }
 }
