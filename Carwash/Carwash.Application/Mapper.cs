@@ -3,6 +3,7 @@ using Carwash.Application.Contracts.Clients;
 using Carwash.Application.Contracts.Cars;
 using Carwash.Application.Contracts.Services;
 using Carwash.Application.Contracts.Orders;
+using Carwash.Application.Contracts.Analytics;
 
 namespace Carwash.Application;
 
@@ -24,7 +25,7 @@ public static class Mapper
     /// </summary>
     /// <param name="entities">Список сущностей Client для преобразования.</param>
     /// <returns>Список объектов ClientDto.</returns>
-    public static IList<ClientDto> Map(IList<Client> entities) => [.. entities.Select(Map)];
+    public static IList<ClientDto> Map(IList<Client> entities) => [.. entities.Select(entity => Map(entity))];
 
     /// <summary>
     /// Преобразует объект Order в соответствующий объект OrderDto.
@@ -54,7 +55,7 @@ public static class Mapper
     /// </summary>
     /// <param name="entities">Список сущностей Service для преобразования.</param>
     /// <returns>Список объектов ServiceDto.</returns>
-    public static IList<ServiceDto> Map(IList<Service> entities) => [.. entities.Select(Map)];
+    public static IList<ServiceDto> Map(IList<Service> entities) => [.. entities.Select(entity => Map(entity))];
 
     /// <summary>
     /// Преобразует сущность Car в объект CarDto.
@@ -102,4 +103,31 @@ public static class Mapper
     /// <returns>Новый экземпляр Order с заполненными свойствами.</returns>
     public static Order Map(OrderCreateUpdateDto dto) =>
         new() { Id = 0, ClientId = dto.ClientId, CarId = dto.CarId, ServiceId = dto.ServiceId, BoxNumber = dto.BoxNumber, StartTime = dto.StartTime };
+
+    /// <summary>
+    /// Создает объект ClientVisitDto на основе клиента и количества посещений.
+    /// </summary>
+    /// <param name="Client">Экземпляр клиента для отображения.</param>
+    /// <param name="VisitCount">Количество посещений клиента.</param>
+    /// <returns>Новый экземпляр ClientVisitDto.</returns>
+    public static ClientVisitDto Map(Client Client, int VisitCount) =>
+        new(Map(Client), VisitCount);
+
+    /// <summary>
+    /// Преобразует объект Service и количество заказов в экземпляр PopularServiceDto.
+    /// </summary>
+    /// <param name="Service">Сервис для преобразования.</param>
+    /// <param name="OrderCount">Количество заказов для сервиса.</param>
+    /// <returns>Экземпляр PopularServiceDto, содержащий преобразованный сервис и количество заказов.</returns>
+    public static PopularServiceDto Map(Service Service, int OrderCount) =>
+        new(Map(Service), OrderCount);
+
+    /// <summary>
+    /// Создает экземпляр ServiceRevenueDto на основе указанного сервиса и общей выручки.
+    /// </summary>
+    /// <param name="Service">Сервис, для которого создается DTO.</param>
+    /// <param name="TotalRevenue">Общая выручка, связанная с сервисом.</param>
+    /// <returns>Экземпляр ServiceRevenueDto, содержащий данные сервиса и выручку.</returns>
+    public static ServiceRevenueDto Map(Service Service, decimal TotalRevenue) =>
+        new(Map(Service), TotalRevenue);
 }

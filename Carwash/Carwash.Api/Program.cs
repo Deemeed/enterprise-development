@@ -20,6 +20,7 @@ builder.Services.AddScoped<IApplicationService<ClientDto, ClientCreateUpdateDto,
 builder.Services.AddScoped<IApplicationService<CarDto, CarCreateUpdateDto, int>, CarService>();
 builder.Services.AddScoped<IApplicationService<ServiceDto, ServiceCreateUpdateDto, int>, ServiceService>();
 builder.Services.AddScoped<IApplicationService<OrderDto, OrderCreateUpdateDto, int>, OrderService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
