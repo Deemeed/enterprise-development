@@ -79,14 +79,15 @@ public static class Mapper
     /// <returns>Новый экземпляр Client с заполненными свойствами.</returns>
     public static Client Map(ClientCreateUpdateDto dto) =>
         new() { Id = 0, FullName = dto.FullName, PhoneNumber = dto.PhoneNumber, Cars = [] };
-    
+
     /// <summary>
     /// Создает новый экземпляр Car на основе данных из CarCreateUpdateDto.
     /// </summary>
     /// <param name="dto">Объект с данными для создания или обновления автомобиля.</param>
+    /// <param name="client">Клиент, связанный с автомобилем.</param>
     /// <returns>Новый экземпляр Car с заполненными свойствами.</returns>
-    public static Car Map(CarCreateUpdateDto dto) =>
-        new() { Id = 0, LicensePlate = dto.LicensePlate, Brand = dto.Brand, ClientId = dto.ClientId };
+    public static Car Map(CarCreateUpdateDto dto, Client client) =>
+        new() { Id = 0, LicensePlate = dto.LicensePlate, Brand = dto.Brand, ClientId = dto.ClientId, Client = client };
 
     /// <summary>
     /// Создает новый экземпляр Service на основе данных из ServiceCreateUpdateDto.
@@ -100,9 +101,12 @@ public static class Mapper
     /// Создает новый экземпляр Order на основе данных из OrderCreateUpdateDto.
     /// </summary>
     /// <param name="dto">Данные для создания или обновления заказа.</param>
+    /// <param name="client">Клиент, связанный с заказом.</param>
+    /// <param name="car">Автомобиль, связанный с заказом.</param>
+    /// <param name="service">Услуга, связанная с заказом.</param>
     /// <returns>Новый экземпляр Order с заполненными свойствами.</returns>
-    public static Order Map(OrderCreateUpdateDto dto) =>
-        new() { Id = 0, ClientId = dto.ClientId, CarId = dto.CarId, ServiceId = dto.ServiceId, BoxNumber = dto.BoxNumber, StartTime = dto.StartTime };
+    public static Order Map(OrderCreateUpdateDto dto, Client client, Car car, Service service) =>
+        new() { Id = 0, ClientId = dto.ClientId, Client = client, CarId = dto.CarId, Car = car, ServiceId = dto.ServiceId, Service = service, BoxNumber = dto.BoxNumber, StartTime = dto.StartTime };
 
     /// <summary>
     /// Создает объект ClientVisitDto на основе клиента и количества посещений.

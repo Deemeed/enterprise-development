@@ -9,12 +9,25 @@ namespace Carwash.Application.Services;
 /// Служба для CRUD-операций над заказами
 /// </summary>
 /// <param name="orderRepository">Репозиторий заказов</param>
-public class OrderService(IRepository<Order, int> orderRepository) : IApplicationService<OrderDto, OrderCreateUpdateDto, int>
+/// <param name="clientRepository">Репозиторий клиентов</param>
+/// <param name="carRepository">Репозиторий автомобилей</param>
+/// <param name="serviceRepository">Репозиторий услуг</param>
+public class OrderService(IRepository<Order, int> orderRepository,
+    IRepository<Client, int> clientRepository, IRepository<Car, int> carRepository,
+    IRepository<Service, int> serviceRepository) :
+    IApplicationService<OrderDto, OrderCreateUpdateDto, int>
 {
     /// <inheritdoc/>
     public async Task<OrderDto> Create(OrderCreateUpdateDto dto)
     {
-        var order = Mapper.Map(dto);
+        var client = await clientRepository.Read(dto.ClientId);
+        if (client == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var car = await carRepository.Read(dto.CarId);
+        if (car == null) throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
+        var service = await serviceRepository.Read(dto.ServiceId);
+        if (service == null) throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
+
+        var order = Mapper.Map(dto, client, car, service);
 
         var result = await orderRepository.Create(order);
 
@@ -41,7 +54,14 @@ public class OrderService(IRepository<Order, int> orderRepository) : IApplicatio
     /// <inheritdoc/>
     public async Task<OrderDto> Update(OrderCreateUpdateDto dto, int id)
     {
-        var order = Mapper.Map(dto);
+        var client = await clientRepository.Read(dto.ClientId);
+        if (client == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var car = await carRepository.Read(dto.CarId);
+        if (car == null) throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
+        var service = await serviceRepository.Read(dto.ServiceId);
+        if (service == null) throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
+
+        var order = Mapper.Map(dto, client, car, service);
         order.Id = id;
 
         var result = await orderRepository.Update(order);

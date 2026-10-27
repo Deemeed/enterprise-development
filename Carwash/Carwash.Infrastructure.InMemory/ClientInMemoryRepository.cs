@@ -50,11 +50,10 @@ public class ClientInMemoryRepository : IRepository<Client, int>
         var client = Read(entity.Id).Result;
 
         if (client == null)
-            return Create(client);
+            return Create(entity);
 
         client.FullName = entity.FullName;
         client.PhoneNumber = entity.PhoneNumber;
-        client.Cars = entity.Cars;
 
         return Task.FromResult(client);
     }
