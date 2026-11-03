@@ -44,7 +44,7 @@ public class AnalyticsService(IRepository<Order, int> orderRepository) : IAnalyt
             .DistinctBy(car => car.Id)
             .ToList();
 
-        return Mapper.Map(result) ?? new List<CarDto>();
+        return Mapper.Map(result) ?? [];
     }
 
     /// <inheritdoc/>

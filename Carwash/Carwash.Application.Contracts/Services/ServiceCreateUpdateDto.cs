@@ -1,4 +1,4 @@
-﻿using Carwash.Domain.Enums;
+﻿using Carwash.Shared;
 
 namespace Carwash.Application.Contracts.Services;
 
