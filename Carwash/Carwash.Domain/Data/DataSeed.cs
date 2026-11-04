@@ -1,5 +1,5 @@
 ﻿using Carwash.Domain.Entities;
-using Carwash.Domain.Enums;
+using Carwash.Shared;
 
 namespace Carwash.Domain.Data;
 

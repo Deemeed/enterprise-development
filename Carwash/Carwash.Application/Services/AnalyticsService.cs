@@ -13,19 +13,17 @@ namespace Carwash.Application.Services;
 public class AnalyticsService(IRepository<Order, int> orderRepository) : IAnalyticsService
 {
     /// <inheritdoc/>
-    public async Task<DateTime?> GetBoxReleaseTime(int BoxNumber)
+    public async Task<DateTime?> GetBoxReleaseTime(int boxNumber)
     {
         var orders = await orderRepository.ReadAll();
         var currentTime = DateTime.Now;
 
         var releaseTime = orders
             .Where(order =>
-                order.BoxNumber == BoxNumber &&
+                order.BoxNumber == boxNumber &&
                 order.StartTime <= currentTime &&
                 order.EndTime > currentTime)
-            .Max(order => order.EndTime);
-
-        if (releaseTime == DateTime.MinValue) return null;
+            .Max(order => (DateTime?)order.EndTime);
 
         return releaseTime;
     }

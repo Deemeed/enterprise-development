@@ -17,27 +17,27 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
     /// <summary>
     /// Получение времени освобождения выбранного бокса
     /// </summary>
-    /// <param name="BoxNumber">Номер бокса</param>
+    /// <param name="boxNumber">Номер бокса</param>
     /// <returns>Время освобождения</returns>
-    [HttpGet("box-release-time/{BoxNumber:int}")]
+    [HttpGet("box-release-time/{boxNumber:int}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
-    public async Task<ActionResult<DateTime?>> GetBoxReleaseTime(int BoxNumber)
+    public async Task<ActionResult<DateTime?>> GetBoxReleaseTime(int boxNumber)
     {
         logger.LogInformation(
             "{method} method of {Pcontroller} is called with parameters: boxNumber={boxNumber}.",
-            nameof(GetBoxReleaseTime), GetType().Name, BoxNumber);
+            nameof(GetBoxReleaseTime), GetType().Name, boxNumber);
 
         try
         {
-            var result = await service.GetBoxReleaseTime(BoxNumber);
+            var result = await service.GetBoxReleaseTime(boxNumber);
 
             if (result == null)
             {
                 logger.LogWarning(
                     "{method} method of {Pcontroller} completed without a result for boxNumber={boxNumber}.",
-                    nameof(GetBoxReleaseTime), GetType().Name, BoxNumber);
+                    nameof(GetBoxReleaseTime), GetType().Name, boxNumber);
 
                 return NotFound();
             }
@@ -50,7 +50,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error occurred while getting box release time for boxNumber={boxNumber}.", BoxNumber);
+            logger.LogError(ex, "Error occurred while getting box release time for boxNumber={boxNumber}.", boxNumber);
             return StatusCode(500, "Internal server error");
         }
     }
