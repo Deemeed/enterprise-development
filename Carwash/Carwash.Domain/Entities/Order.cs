@@ -18,7 +18,7 @@ public class Order
     /// <summary>
     /// Клиент, сделавший заказ
     /// </summary>
-    public Client? Client { get; set; }
+    public required Client Client { get; set; }
 
     /// <summary>
     /// Идентификатор автомобиля, для которого офрмляется заказ
@@ -28,7 +28,7 @@ public class Order
     /// <summary>
     /// Автомобиль, для которой оформляется заказ
     /// </summary>
-    public Car? Car { get; set; }
+    public required Car Car { get; set; }
 
     /// <summary>
     /// Идентификатор услуги, для которой оформляется заказ
@@ -38,7 +38,7 @@ public class Order
     /// <summary>
     /// Услуга, для которой оформляется заказ
     /// </summary>
-    public Service? Service { get; set; }
+    public required Service Service { get; set; }
 
     /// <summary>
     /// Номер бокса, в котором будет выполняться заказ

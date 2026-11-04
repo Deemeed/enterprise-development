@@ -28,5 +28,5 @@ public class Car
     /// <summary>
     /// Клиент, которому принадлежит автомобиль
     /// </summary>
-    public Client? Client { get; set; }
+    public required Client Client { get; set; }
 }

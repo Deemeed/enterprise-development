@@ -11,6 +11,15 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     [Fact]
     public void GetTopFiveClients_ShouldReturnClientsOrderedByVisitCount()
     {
+        List<(string FullName, int VisitCount)> expected =
+        [
+            ("Иван Петров", 6),
+            ("Анна Сидорова", 5),
+            ("Алексей Смирнов", 4),
+            ("Мария Иванова", 3),
+            ("Дмитрий Кузнецов", 2)
+        ];
+
         var result = fixture.Orders
             .GroupBy(order => order.Client)
             .Select(group => new
@@ -21,24 +30,10 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
             .OrderByDescending(item => item.VisitCount)
             .ThenBy(item => item.Client.Id)
             .Take(5)
+            .Select(item => (item.Client.FullName, item.VisitCount))
             .ToList();
 
-        Assert.Equal(5, result.Count);
-
-        Assert.Equal("Иван Петров", result[0].Client.FullName);
-        Assert.Equal(6, result[0].VisitCount);
-
-        Assert.Equal("Анна Сидорова", result[1].Client.FullName);
-        Assert.Equal(5, result[1].VisitCount);
-
-        Assert.Equal("Алексей Смирнов", result[2].Client.FullName);
-        Assert.Equal(4, result[2].VisitCount);
-
-        Assert.Equal("Мария Иванова", result[3].Client.FullName);
-        Assert.Equal(3, result[3].VisitCount);
-
-        Assert.Equal("Дмитрий Кузнецов", result[4].Client.FullName);
-        Assert.Equal(2, result[4].VisitCount);
+        Assert.Equal(expected, result);
     }
 
     /// <summary>
@@ -47,6 +42,8 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     [Fact]
     public void GetCarsCurrentlyAtCarWash_ShouldReturnActiveOrders()
     {
+        List<int> expected = [1, 2, 3];
+
         var currentTime = fixture.CurrentTime;
 
         var result = fixture.Orders
@@ -55,19 +52,11 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
                 order.EndTime > currentTime)
             .Select(order => order.Car)
             .Distinct()
+            .Select(car => car.Id)
+            .OrderBy(id => id)
             .ToList();
 
-        Assert.Equal(3, result.Count);
-
-        Assert.Contains(result, car => car.Id == 1);
-        Assert.Contains(result, car => car.Id == 2);
-        Assert.Contains(result, car => car.Id == 3);
-
-        Assert.DoesNotContain(result, car => car.Id == 4);
-        Assert.DoesNotContain(result, car => car.Id == 5);
-        Assert.DoesNotContain(result, car => car.Id == 6);
-        Assert.DoesNotContain(result, car => car.Id == 7);
-        Assert.DoesNotContain(result, car => car.Id == 8);
+        Assert.Equal(expected, result);
     }
 
     /// <summary>
@@ -76,6 +65,15 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     [Fact]
     public void GetTopFivePopularServices_ShouldReturnServicesOrderedByOrderCount()
     {
+        List<(string Name, int OrderCount)> expected =
+        [
+            ("Экспресс-мойка", 7),
+            ("Комплексная мойка", 6),
+            ("Премиум-мойка", 5),
+            ("Мойка внедорожника", 3),
+            ("Люкс-мойка", 2)
+        ];
+
         var result = fixture.Orders
             .GroupBy(order => order.Service)
             .Select(group => new
@@ -86,24 +84,10 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
             .OrderByDescending(item => item.OrderCount)
             .ThenBy(item => item.Service.Id)
             .Take(5)
+            .Select(item => (item.Service.Name, item.OrderCount))
             .ToList();
 
-        Assert.Equal(5, result.Count);
-
-        Assert.Equal("Экспресс-мойка", result[0].Service.Name);
-        Assert.Equal(7, result[0].OrderCount);
-
-        Assert.Equal("Комплексная мойка", result[1].Service.Name);
-        Assert.Equal(6, result[1].OrderCount);
-
-        Assert.Equal("Премиум-мойка", result[2].Service.Name);
-        Assert.Equal(5, result[2].OrderCount);
-
-        Assert.Equal("Мойка внедорожника", result[3].Service.Name);
-        Assert.Equal(3, result[3].OrderCount);
-
-        Assert.Equal("Люкс-мойка", result[4].Service.Name);
-        Assert.Equal(2, result[4].OrderCount);
+        Assert.Equal(expected, result);
     }
 
     /// <summary>
@@ -114,16 +98,16 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     {
         const int boxNumber = 1;
         var currentTime = fixture.CurrentTime;
-        var expectedReleaseTime = new DateTime(2026, 9, 24, 13, 10, 0);
+        var expected = new DateTime(2026, 9, 24, 13, 10, 0);
 
-        var releaseTime = fixture.Orders
+        var result = fixture.Orders
             .Where(order =>
                 order.BoxNumber == boxNumber &&
                 order.StartTime <= currentTime &&
                 order.EndTime > currentTime)
             .Max(order => order.EndTime);
 
-        Assert.Equal(expectedReleaseTime, releaseTime);
+        Assert.Equal(expected, result);
     }
 
     /// <summary>
@@ -132,6 +116,15 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
     [Fact]
     public void GetTotalRevenueByService_ShouldReturnCorrectRevenue()
     {
+        List<(int ServiceId, decimal Revenue)> expected =
+        [
+            (1, 5600m),
+            (2, 9000m),
+            (3, 12500m),
+            (4, 9000m),
+            (5, 8000m)
+        ];
+
         var result = fixture.Orders
             .GroupBy(order => order.Service)
             .Select(group => new
@@ -140,28 +133,9 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
                 Revenue = group.Sum(order => order.Service.Price)
             })
             .OrderBy(item => item.Service.Id)
+            .Select(item => (item.Service.Id, item.Revenue))
             .ToList();
 
-        Assert.Equal(5, result.Count);
-
-        Assert.Equal(
-            5600m,
-            result.Single(item => item.Service.Id == 1).Revenue);
-
-        Assert.Equal(
-            9000m,
-            result.Single(item => item.Service.Id == 2).Revenue);
-
-        Assert.Equal(
-            12500m,
-            result.Single(item => item.Service.Id == 3).Revenue);
-
-        Assert.Equal(
-            9000m,
-            result.Single(item => item.Service.Id == 4).Revenue);
-
-        Assert.Equal(
-            8000m,
-            result.Single(item => item.Service.Id == 5).Revenue);
+        Assert.Equal(expected, result);
     }
 }
