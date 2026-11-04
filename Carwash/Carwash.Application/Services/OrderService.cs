@@ -20,12 +20,9 @@ public class OrderService(IRepository<Order, int> orderRepository,
     /// <inheritdoc/>
     public async Task<OrderDto> Create(OrderCreateUpdateDto dto)
     {
-        var client = await clientRepository.Read(dto.ClientId);
-        if (client == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
-        var car = await carRepository.Read(dto.CarId);
-        if (car == null) throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
-        var service = await serviceRepository.Read(dto.ServiceId);
-        if (service == null) throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
+        var client = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var car = await carRepository.Read(dto.CarId) ?? throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
+        var service = await serviceRepository.Read(dto.ServiceId) ?? throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
 
         var order = Mapper.Map(dto, client, car, service);
 
@@ -54,12 +51,9 @@ public class OrderService(IRepository<Order, int> orderRepository,
     /// <inheritdoc/>
     public async Task<OrderDto> Update(OrderCreateUpdateDto dto, int id)
     {
-        var client = await clientRepository.Read(dto.ClientId);
-        if (client == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
-        var car = await carRepository.Read(dto.CarId);
-        if (car == null) throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
-        var service = await serviceRepository.Read(dto.ServiceId);
-        if (service == null) throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
+        var client = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var car = await carRepository.Read(dto.CarId) ?? throw new KeyNotFoundException($"Автомобиль с Id={dto.CarId} не существует");
+        var service = await serviceRepository.Read(dto.ServiceId) ?? throw new KeyNotFoundException($"Услуга с Id={dto.ServiceId} не существует");
 
         var order = Mapper.Map(dto, client, car, service);
         order.Id = id;

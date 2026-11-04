@@ -16,8 +16,7 @@ public class CarService(IRepository<Car, int> carRepository,
     /// <inheritdoc/>
     public async Task<CarDto> Create(CarCreateUpdateDto dto)
     {
-        var client = await clientRepository.Read(dto.ClientId);
-        if (client == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var client = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
 
         var car = Mapper.Map(dto, client);
 
@@ -63,13 +62,10 @@ public class CarService(IRepository<Car, int> carRepository,
     /// <inheritdoc/>
     public async Task<CarDto> Update(CarCreateUpdateDto dto, int id)
     {
-        var car = await carRepository.Read(id);
-        if (car == null) throw new KeyNotFoundException($"Автомобиль с Id={id} не существует");
-        var client = await clientRepository.Read(car.ClientId);
-        if (client == null) throw new KeyNotFoundException($"Клиент с Id={car.ClientId} не существует");
+        var car = await carRepository.Read(id) ?? throw new KeyNotFoundException($"Автомобиль с Id={id} не существует");
+        var client = await clientRepository.Read(car.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={car.ClientId} не существует");
 
-        var potentiallyNewClient = await clientRepository.Read(dto.ClientId);
-        if (potentiallyNewClient == null) throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var potentiallyNewClient = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
 
         var updatedCar = Mapper.Map(dto, potentiallyNewClient);
         updatedCar.Id = id;
