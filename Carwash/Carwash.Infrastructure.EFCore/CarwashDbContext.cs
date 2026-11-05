@@ -2,7 +2,7 @@
 using Carwash.Domain.Entities;
 using Carwash.Domain.Data;
 
-namespace Carwash.Infrastructure.EFCore;
+namespace Carwash.Infrastructure.EfCore;
 
 /// <summary>
 /// Контекст базы данных для управления сущностями Carwash
