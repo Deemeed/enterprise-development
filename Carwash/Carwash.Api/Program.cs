@@ -9,8 +9,11 @@ using Carwash.Application.Contracts.Cars;
 using Carwash.Application.Contracts.Services;
 using Carwash.Application.Contracts.Orders;
 using Scalar.AspNetCore;
+using Carwash.ServiceDefaults;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
 
 builder.AddSqlServerDbContext<CarwashDbContext>("SqlServer");
 

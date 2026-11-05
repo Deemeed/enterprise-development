@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Carwash.Api/Carwash.Api.csproj" Id="bbe988fa-9c95-4d94-8c9b-578b54ec41d1" />
+  <Project Path="Carwash.AppHost/Carwash.AppHost.csproj" Id="e7db2f85-9e47-46f2-a77a-0aeed1c0ff5e" />
   <Project Path="Carwash.Application.Contracts/Carwash.Application.Contracts.csproj" Id="2a8cf0ff-b7bb-4c08-96aa-411cb9dd53a8" />
   <Project Path="Carwash.Application/Carwash.Application.csproj" Id="cf477393-1563-4825-94de-3bb5b698b849" />
   <Project Path="Carwash.Domain/Carwash.Domain.csproj" />
