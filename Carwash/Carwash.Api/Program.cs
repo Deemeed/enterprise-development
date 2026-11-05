@@ -2,7 +2,8 @@ using Carwash.Application.Services;
 using Carwash.Application.Contracts;
 using Carwash.Domain;
 using Carwash.Domain.Entities;
-using Carwash.Infrastructure.InMemory;
+using Carwash.Infrastructure.EfCore;
+using Carwash.Infrastructure.EfCore.Repositories;
 using Carwash.Application.Contracts.Clients;
 using Carwash.Application.Contracts.Cars;
 using Carwash.Application.Contracts.Services;
@@ -11,10 +12,12 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IRepository<Client, int>, ClientInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Car, int>, CarInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Service, int>, ServiceInMemoryRepository>();
-builder.Services.AddSingleton<IRepository<Order, int>, OrderInMemoryRepository>();
+builder.AddSqlServerDbContext<CarwashDbContext>("SqlServer");
+
+builder.Services.AddSingleton<IRepository<Client, int>, ClientEfCoreRepository>();
+builder.Services.AddSingleton<IRepository<Car, int>, CarEfCoreRepository>();
+builder.Services.AddSingleton<IRepository<Service, int>, ServiceEfCoreRepository>();
+builder.Services.AddSingleton<IRepository<Order, int>, OrderEfCoreRepository>();
 
 builder.Services.AddScoped<IApplicationService<ClientDto, ClientCreateUpdateDto, int>, ClientService>();
 builder.Services.AddScoped<IApplicationService<CarDto, CarCreateUpdateDto, int>, CarService>();

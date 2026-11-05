@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.18.3" />
   </ItemGroup>
 
@@ -16,7 +16,7 @@
     <ProjectReference Include="..\Carwash.Application.Contracts\Carwash.Application.Contracts.csproj" />
     <ProjectReference Include="..\Carwash.Application\Carwash.Application.csproj" />
     <ProjectReference Include="..\Carwash.Domain\Carwash.Domain.csproj" />
-    <ProjectReference Include="..\Carwash.Infrastructure.InMemory\Carwash.Infrastructure.InMemory.csproj" />
+    <ProjectReference Include="..\Carwash.Infrastructure.EFCore\Carwash.Infrastructure.EfCore.csproj" />
   </ItemGroup>
 
 </Project>
