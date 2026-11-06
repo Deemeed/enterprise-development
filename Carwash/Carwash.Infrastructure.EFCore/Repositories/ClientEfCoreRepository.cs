@@ -31,10 +31,10 @@ public class ClientEfCoreRepository(CarwashDbContext context) : IRepository<Clie
     }
 
     /// <inheritdoc/>
-    public async Task<Client?> Read(int entityId) => await context.Clients.FirstOrDefaultAsync(c => c.Id == entityId);
+    public async Task<Client?> Read(int entityId) => await context.Clients.Include(c => c.Cars).FirstOrDefaultAsync(c => c.Id == entityId);
 
     /// <inheritdoc/>
-    public async Task<List<Client>> ReadAll() => await context.Clients.ToListAsync();
+    public async Task<List<Client>> ReadAll() => await context.Clients.Include(c => c.Cars).ToListAsync();
 
     /// <inheritdoc/>
     public async Task<Client> Update(Client entity)

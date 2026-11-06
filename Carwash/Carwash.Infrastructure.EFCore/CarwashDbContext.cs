@@ -17,29 +17,61 @@ public class CarwashDbContext(DbContextOptions options) : DbContext(options)
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Конфигурация сущности Car
-        modelBuilder.Entity<Car>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.HasOne(c => c.Client).WithMany(c => c.Cars);
-            entity.HasData(DataSeed.Cars);
-        });
         // Конфигурация сущности Client
         modelBuilder.Entity<Client>(entity =>
         {
             entity.HasKey(e => e.Id);
-            entity.HasMany(c => c.Cars).WithOne(c => c.Client);
+            entity.HasMany(c => c.Cars).WithOne(c => c.Client)
+            .HasForeignKey(c => c.ClientId)
+            .OnDelete(DeleteBehavior.Cascade);
             entity.HasData(DataSeed.Clients);
+        });
+        // Конфигурация сущности Car
+        modelBuilder.Entity<Car>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasData(DataSeed.Cars.Select(c => new
+            {
+                c.Id,
+                c.LicensePlate,
+                c.Brand,
+                c.ClientId
+            }));
         });
         // Конфигурация сущности Order
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.Ignore(o => o.EndTime);
             entity.HasKey(e => e.Id);
-            entity.HasOne(o => o.Car);
-            entity.HasOne(o => o.Client);
-            entity.HasOne(o => o.Service);
-            entity.HasData(DataSeed.Orders);
+            entity.Ignore(o => o.EndTime);
+
+            entity.HasOne(o => o.Car)
+            .WithMany()
+            .HasForeignKey(o => o.CarId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(o => o.Client)
+            .WithMany()
+            .HasForeignKey(o => o.ClientId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(o => o.Service)
+            .WithMany()
+            .HasForeignKey(o => o.ServiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+            entity.Navigation(o => o.Car).AutoInclude();
+            entity.Navigation(o => o.Client).AutoInclude();
+            entity.Navigation(o => o.Service).AutoInclude();
+
+            entity.HasData(DataSeed.Orders.Select(o => new
+            {
+                o.Id,
+                o.ClientId,
+                o.CarId,
+                o.ServiceId,
+                o.BoxNumber,
+                o.StartTime
+            }));
         });
         // Конфигурация сущности Service
         modelBuilder.Entity<Service>(entity =>

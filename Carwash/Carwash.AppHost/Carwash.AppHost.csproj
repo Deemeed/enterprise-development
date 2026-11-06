@@ -9,4 +9,12 @@
     <UserSecretsId>af43cb1f-f23f-4767-98d4-db935060af45</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.SqlServer" Version="13.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Carwash.Api\Carwash.Api.csproj" />
+  </ItemGroup>
+
 </Project>

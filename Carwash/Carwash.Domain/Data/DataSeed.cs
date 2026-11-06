@@ -1,4 +1,6 @@
-﻿using Carwash.Domain.Entities;
+﻿#pragma warning disable CS9035
+
+using Carwash.Domain.Entities;
 using Carwash.Shared;
 
 namespace Carwash.Domain.Data;
@@ -488,11 +490,11 @@ public static class DataSeed
     /// <summary>
     /// Конструктор статического класса, который инициализирует связи между клиентами и их автомобилями.
     /// </summary>
-    static DataSeed()
+    /*static DataSeed()
     {
         foreach (var client in Clients)
         {
             client.Cars = [.. Cars.Where(car => car.ClientId == client.Id)];
         }
-    }
+    }*/
 }

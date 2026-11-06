@@ -10,6 +10,7 @@ using Carwash.Application.Contracts.Services;
 using Carwash.Application.Contracts.Orders;
 using Scalar.AspNetCore;
 using Carwash.ServiceDefaults;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +18,10 @@ builder.AddServiceDefaults();
 
 builder.AddSqlServerDbContext<CarwashDbContext>("SqlServer");
 
-builder.Services.AddSingleton<IRepository<Client, int>, ClientEfCoreRepository>();
-builder.Services.AddSingleton<IRepository<Car, int>, CarEfCoreRepository>();
-builder.Services.AddSingleton<IRepository<Service, int>, ServiceEfCoreRepository>();
-builder.Services.AddSingleton<IRepository<Order, int>, OrderEfCoreRepository>();
+builder.Services.AddTransient<IRepository<Client, int>, ClientEfCoreRepository>();
+builder.Services.AddTransient<IRepository<Car, int>, CarEfCoreRepository>();
+builder.Services.AddTransient<IRepository<Service, int>, ServiceEfCoreRepository>();
+builder.Services.AddTransient<IRepository<Order, int>, OrderEfCoreRepository>();
 
 builder.Services.AddScoped<IApplicationService<ClientDto, ClientCreateUpdateDto, int>, ClientService>();
 builder.Services.AddScoped<IApplicationService<CarDto, CarCreateUpdateDto, int>, CarService>();
@@ -37,6 +38,11 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+
+    using var scope = app.Services.CreateScope();
+
+    var context = scope.ServiceProvider.GetRequiredService<CarwashDbContext>();
+    context.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
