@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Carwash.Application.Contracts\Carwash.Application.Contracts.csproj" />
     <ProjectReference Include="..\Carwash.Application\Carwash.Application.csproj" />
     <ProjectReference Include="..\Carwash.Domain\Carwash.Domain.csproj" />
-    <ProjectReference Include="..\Carwash.Infrastructure.EFCore\Carwash.Infrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\Carwash.Infrastructure.EfCore\Carwash.Infrastructure.EfCore.csproj" />
     <ProjectReference Include="..\Carwash.ServiceDefaults\Carwash.ServiceDefaults.csproj" />
   </ItemGroup>
 
