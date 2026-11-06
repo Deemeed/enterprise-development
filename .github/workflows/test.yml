@@ -24,6 +24,9 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Install .NET Aspire
+        run: dotnet workload install aspire
+
       - name: Restore dependencies
         run: dotnet restore Carwash/Carwash.slnx
 
