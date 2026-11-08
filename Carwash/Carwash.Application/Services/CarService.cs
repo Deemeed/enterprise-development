@@ -22,28 +22,11 @@ public class CarService(IRepository<Car, int> carRepository,
 
         var result = await carRepository.Create(car);
 
-        client.Cars.Add(result);
-        await clientRepository.Update(client);
-
         return Mapper.Map(result);
     }
 
     /// <inheritdoc/>
-    public async Task<bool> Delete(int id)
-    {
-        var car = await carRepository.Read(id);
-        if (car == null)
-            return false;
-
-        var client = await clientRepository.Read(car.ClientId);
-        if (client != null)
-        {
-            client.Cars.RemoveAll(c => c.Id == id);
-            await clientRepository.Update(client);
-        }
-
-        return await carRepository.Delete(id);
-    }
+    public async Task<bool> Delete(int id) => await carRepository.Delete(id);
 
     /// <inheritdoc/>
     public async Task<CarDto?> Read(int id)
@@ -62,23 +45,12 @@ public class CarService(IRepository<Car, int> carRepository,
     /// <inheritdoc/>
     public async Task<CarDto> Update(CarCreateUpdateDto dto, int id)
     {
-        var car = await carRepository.Read(id) ?? throw new KeyNotFoundException($"Автомобиль с Id={id} не существует");
-        var client = await clientRepository.Read(car.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={car.ClientId} не существует");
+        var client = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
 
-        var potentiallyNewClient = await clientRepository.Read(dto.ClientId) ?? throw new KeyNotFoundException($"Клиент с Id={dto.ClientId} не существует");
+        var car = Mapper.Map(dto, client);
+        car.Id = id;
 
-        var updatedCar = Mapper.Map(dto, potentiallyNewClient);
-        updatedCar.Id = id;
-
-        if (car.ClientId != dto.ClientId)
-        {
-            client.Cars.RemoveAll(c => c.Id == id);
-            await clientRepository.Update(client);
-            potentiallyNewClient.Cars.Add(updatedCar);
-            await clientRepository.Update(potentiallyNewClient);
-        }
-
-        var result = await carRepository.Update(updatedCar);
+        var result = await carRepository.Update(car);
 
         return Mapper.Map(result);
     }
