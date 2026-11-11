@@ -18,18 +18,25 @@ public class AnalyticsService(IRepository<Order, int> orderRepository) : IAnalyt
         var orders = await orderRepository.ReadAll();
         var currentTime = DateTime.Now;
 
-        var releaseTime = orders
+        var ordersForBox = orders
+            .Where(order => order.BoxNumber == boxNumber)
+            .ToList();
+
+        if (ordersForBox.Count == 0)
+            return null;
+
+        var releaseTime = ordersForBox
             .Where(order =>
                 order.BoxNumber == boxNumber &&
                 order.StartTime <= currentTime &&
                 order.EndTime > currentTime)
             .Max(order => (DateTime?)order.EndTime);
 
-        return releaseTime;
+        return releaseTime ?? currentTime;
     }
 
     /// <inheritdoc/>
-    public async Task<IList<CarDto>?> GetCarsCurrentlyAtCarWash()
+    public async Task<IList<CarDto>> GetCarsCurrentlyAtCarWash()
     {
         var orders = await orderRepository.ReadAll();
         var currentTime = DateTime.Now;

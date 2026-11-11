@@ -75,7 +75,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         try
         {
             var result = await applicationService.Create(dto);
-            return CreatedAtAction(nameof(Create), result);
+            return result == null ? BadRequest() : CreatedAtAction(nameof(Get), result);
         }
         catch (Exception ex)
         {

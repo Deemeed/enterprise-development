@@ -36,7 +36,7 @@ public class AnalyticsController(IAnalyticsService service, ILogger<AnalyticsCon
             if (result == null)
             {
                 logger.LogWarning(
-                    "{method} method of {Pcontroller} completed without a result for boxNumber={boxNumber}.",
+                    "{method} method of {Pcontroller} completed without a result. Box with number boxNumber={boxNumber} not in Orders.",
                     nameof(GetBoxReleaseTime), GetType().Name, boxNumber);
 
                 return NotFound();

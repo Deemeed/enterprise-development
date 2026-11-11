@@ -18,7 +18,7 @@ public interface IAnalyticsService
     /// Получение списка автомобилей, которые в данный момент находятся на автомойке.
     /// </summary>
     /// <returns>Список CarDto</returns>
-    public Task<IList<CarDto>?> GetCarsCurrentlyAtCarWash();
+    public Task<IList<CarDto>> GetCarsCurrentlyAtCarWash();
 
     /// <summary>
     /// Получение списка из пяти Dto самых популярных услуг
