@@ -45,6 +45,8 @@ if (app.Environment.IsDevelopment())
     context.Database.Migrate();
 }
 
+app.MapDefaultEndpoints();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
