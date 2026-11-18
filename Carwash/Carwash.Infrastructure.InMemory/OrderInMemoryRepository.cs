@@ -9,7 +9,7 @@ namespace Carwash.Infrastructure.InMemory;
 /// </summary>
 public class OrderInMemoryRepository : IRepository<Order, int>
 {
-    private readonly List<Order> _orders = DataSeed.Orders;
+    private readonly List<Order> _orders = DataSeed.Orders.ToList();
     private int _lastId = DataSeed.Orders.Count + 1;
 
     /// <inheritdoc/>

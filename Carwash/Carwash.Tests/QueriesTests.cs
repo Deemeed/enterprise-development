@@ -122,7 +122,12 @@ public class QueriesTests(QueriesTestsFixture fixture) : IClassFixture<QueriesTe
             (2, 9000m),
             (3, 12500m),
             (4, 9000m),
-            (5, 8000m)
+            (5, 8000m),
+            (6, 1200m),
+            (7, 5000m),
+            (8, 6000m),
+            (9, 1000m),
+            (10, 7000m)
         ];
 
         var result = fixture.Orders

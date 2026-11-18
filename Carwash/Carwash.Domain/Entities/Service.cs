@@ -7,37 +7,37 @@ namespace Carwash.Domain.Entities;
 /// <summary>
 /// Класс услуги
 /// </summary>
-[Table("services")]
+[Table("Services")]
 public class Service
 {
     /// <summary>
     /// Уникальный идентификатор услуги
     /// </summary>
     [Key]
-    [Column("id")]
+    [Column("Id")]
     public required int Id { get; set; }
 
     /// <summary>
     /// Название услуги
     /// </summary>
-    [Column("name")]
+    [Column("Name")]
     public required string Name { get; set; }
 
     /// <summary>
     /// Цена услуги
     /// </summary>
-    [Column("price")]
+    [Column("Price")]
     public required decimal Price { get; set; }
 
     /// <summary>
     /// Категория автомобиля, для которой предназначена услуга
     /// </summary>
-    [Column("category")]
+    [Column("Category")]
     public required Category Category { get; set; }
 
     /// <summary>
     /// Продолжительность услуги в минутах
     /// </summary>
-    [Column("duration_in_minutes")]
+    [Column("DurationInMinutes")]
     public required int DurationInMinutes { get; set; }
 }

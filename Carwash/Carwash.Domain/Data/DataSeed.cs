@@ -68,6 +68,27 @@ public static class DataSeed
             FullName = "Сергей Волков",
             PhoneNumber = "+79990000007",
             Cars = []
+        },
+        new Client
+        {
+            Id = 8,
+            FullName = "Ольга Морозова",
+            PhoneNumber = "+79990000008",
+            Cars = []
+        },
+        new Client
+        {
+            Id = 9,
+            FullName = "Николай Новиков",
+            PhoneNumber = "+79990000009",
+            Cars = []
+        },
+        new Client
+        {
+            Id = 10,
+            FullName = "Татьяна Соколова",
+            PhoneNumber = "+799900000010",
+            Cars = []
         }
     ];
 
@@ -139,6 +160,22 @@ public static class DataSeed
             Brand = "Range Rover",
             ClientId = 1,
             Client = Clients[0]
+        },
+        new Car
+        {
+            Id = 9,
+            LicensePlate = "Р999РР",
+            Brand = "Skoda",
+            ClientId = 8,
+            Client = Clients[7]
+        },
+        new Car
+        {
+            Id = 10,
+            LicensePlate = "Т101ТТ",
+            Brand = "Kia",
+            ClientId = 9,
+            Client = Clients[8]
         }
     ];
 
@@ -186,6 +223,46 @@ public static class DataSeed
             Price = 4000m,
             Category = Category.Luxury,
             DurationInMinutes = 150
+        },
+        new Service
+        {
+            Id = 6,
+            Name = "Мойка двигателя",
+            Price = 1200m,
+            Category = Category.Standard,
+            DurationInMinutes = 45
+        },
+        new Service
+        {
+            Id = 7,
+            Name = "Химчистка салона",
+            Price = 5000m,
+            Category = Category.Premium,
+            DurationInMinutes = 120
+        },
+        new Service
+        {
+            Id = 8,
+            Name = "Полировка кузова",
+            Price = 6000m,
+            Category = Category.Luxury,
+            DurationInMinutes = 180
+        },
+        new Service
+        {
+            Id = 9,
+            Name = "Мойка днища",
+            Price = 1000m,
+            Category = Category.Standard,
+            DurationInMinutes = 40
+        },
+        new Service
+        {
+            Id = 10,
+            Name = "Нанокерамика",
+            Price = 7000m,
+            Category = Category.Luxury,
+            DurationInMinutes = 240
         }
     ];
 
@@ -484,17 +561,68 @@ public static class DataSeed
             Service = Services[1],
             BoxNumber = 2,
             StartTime = CurrentTime.AddMinutes(-15)
+        },
+
+        // Заказы для новых услуг
+        new Order
+        {
+            Id = 24,
+            ClientId = 8,
+            Client = Clients[7],
+            CarId = 9,
+            Car = Cars[8],
+            ServiceId = 6,
+            Service = Services[5],
+            BoxNumber = 2,
+            StartTime = CurrentTime.AddDays(-3).AddHours(2)
+        },
+        new Order
+        {
+            Id = 25,
+            ClientId = 9,
+            Client = Clients[8],
+            CarId = 10,
+            Car = Cars[9],
+            ServiceId = 7,
+            Service = Services[6],
+            BoxNumber = 3,
+            StartTime = CurrentTime.AddDays(-3).AddHours(3)
+        },
+        new Order
+        {
+            Id = 26,
+            ClientId = 7,
+            Client = Clients[6],
+            CarId = 7,
+            Car = Cars[6],
+            ServiceId = 8,
+            Service = Services[7],
+            BoxNumber = 4,
+            StartTime = CurrentTime.AddDays(-2).AddHours(1)
+        },
+        new Order
+        {
+            Id = 27,
+            ClientId = 8,
+            Client = Clients[7],
+            CarId = 9,
+            Car = Cars[8],
+            ServiceId = 9,
+            Service = Services[8],
+            BoxNumber = 5,
+            StartTime = CurrentTime.AddDays(-2).AddHours(2)
+        },
+        new Order
+        {
+            Id = 28,
+            ClientId = 9,
+            Client = Clients[8],
+            CarId = 10,
+            Car = Cars[9],
+            ServiceId = 10,
+            Service = Services[9],
+            BoxNumber = 3,
+            StartTime = CurrentTime.AddDays(-1).AddHours(1)
         }
     ];
-
-    /// <summary>
-    /// Конструктор статического класса, который инициализирует связи между клиентами и их автомобилями.
-    /// </summary>
-    /*static DataSeed()
-    {
-        foreach (var client in Clients)
-        {
-            client.Cars = [.. Cars.Where(car => car.ClientId == client.Id)];
-        }
-    }*/
 }

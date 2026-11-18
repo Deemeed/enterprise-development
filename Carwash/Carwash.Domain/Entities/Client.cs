@@ -6,26 +6,26 @@ namespace Carwash.Domain.Entities;
 /// <summary>
 /// Класс клиента
 /// </summary>
-[Table("clients")]
+[Table("Clients")]
 public class Client
 {
     /// <summary>
     /// Уникальный идентификатор клиента
     /// </summary>
     [Key]
-    [Column("id")]
+    [Column("Id")]
     public required int Id { get; set; }
 
     /// <summary>
     /// Полное имя клиента
     /// </summary>
-    [Column("full_name")]
+    [Column("FullName")]
     public required string FullName { get; set; }
 
     /// <summary>
     /// Номер телефона клиента
     /// </summary>
-    [Column("phone_number")]
+    [Column("PhoneNumber")]
     public required string PhoneNumber { get; set; }
 
     /// <summary>

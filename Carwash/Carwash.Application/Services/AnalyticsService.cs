@@ -27,7 +27,6 @@ public class AnalyticsService(IRepository<Order, int> orderRepository) : IAnalyt
 
         var releaseTime = ordersForBox
             .Where(order =>
-                order.BoxNumber == boxNumber &&
                 order.StartTime <= currentTime &&
                 order.EndTime > currentTime)
             .Max(order => (DateTime?)order.EndTime);

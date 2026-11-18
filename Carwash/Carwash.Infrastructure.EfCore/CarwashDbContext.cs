@@ -21,15 +21,18 @@ public class CarwashDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Client>(entity =>
         {
             entity.HasKey(e => e.Id);
+
             entity.HasMany(c => c.Cars).WithOne(c => c.Client)
-            .HasForeignKey(c => c.ClientId)
-            .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(c => c.ClientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             entity.HasData(DataSeed.Clients);
         });
         // Конфигурация сущности Car
         modelBuilder.Entity<Car>(entity =>
         {
             entity.HasKey(e => e.Id);
+
             entity.HasData(DataSeed.Cars.Select(c => new
             {
                 c.Id,
@@ -45,19 +48,19 @@ public class CarwashDbContext(DbContextOptions options) : DbContext(options)
             entity.Ignore(o => o.EndTime);
 
             entity.HasOne(o => o.Car)
-            .WithMany()
-            .HasForeignKey(o => o.CarId)
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithMany()
+                .HasForeignKey(o => o.CarId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(o => o.Client)
-            .WithMany()
-            .HasForeignKey(o => o.ClientId)
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithMany()
+                .HasForeignKey(o => o.ClientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.HasOne(o => o.Service)
-            .WithMany()
-            .HasForeignKey(o => o.ServiceId)
-            .OnDelete(DeleteBehavior.Restrict);
+                .WithMany()
+                .HasForeignKey(o => o.ServiceId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             entity.Navigation(o => o.Car).AutoInclude();
             entity.Navigation(o => o.Client).AutoInclude();
@@ -77,6 +80,7 @@ public class CarwashDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Service>(entity =>
         {
             entity.HasKey(e => e.Id);
+
             entity.HasData(DataSeed.Services);
         });
     }

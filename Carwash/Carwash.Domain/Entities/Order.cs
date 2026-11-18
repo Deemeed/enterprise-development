@@ -6,20 +6,20 @@ namespace Carwash.Domain.Entities;
 /// <summary>
 /// Класс заказа
 /// </summary>
-[Table("orders")]
+[Table("Orders")]
 public class Order
 {
     /// <summary>
     /// Уникальный идентификатор заказа
     /// </summary>
     [Key]
-    [Column("id")]
+    [Column("Id")]
     public required int Id { get; set; }
 
     /// <summary>
     /// Идентификатор клиента, сделавшего заказ
     /// </summary>
-    [Column("client_id")]
+    [Column("ClientId")]
     public required int ClientId { get; set; }
 
     /// <summary>
@@ -30,7 +30,7 @@ public class Order
     /// <summary>
     /// Идентификатор автомобиля, для которого офрмляется заказ
     /// </summary>
-    [Column("car_id")]
+    [Column("CarId")]
     public required int CarId { get; set; }
 
     /// <summary>
@@ -41,7 +41,7 @@ public class Order
     /// <summary>
     /// Идентификатор услуги, для которой оформляется заказ
     /// </summary>
-    [Column("service_id")]
+    [Column("ServiceId")]
     public required int ServiceId { get; set; }
 
     /// <summary>
@@ -52,13 +52,13 @@ public class Order
     /// <summary>
     /// Номер бокса, в котором будет выполняться заказ
     /// </summary>
-    [Column("box_number")]
+    [Column("BoxNumber")]
     public required int BoxNumber { get; set; }
 
     /// <summary>
     /// Дата и время начала заказа
     /// </summary>
-    [Column("start_time")]
+    [Column("StartTime")]
     public required DateTime StartTime { get; set; }
 
     /// <summary>
