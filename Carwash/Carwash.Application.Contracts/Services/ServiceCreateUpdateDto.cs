@@ -12,6 +12,6 @@ namespace Carwash.Application.Contracts.Services;
 public record ServiceCreateUpdateDto(
     string Name,
     decimal Price,
-    Category Category,
+    string Category,
     int DurationInMinutes
 );

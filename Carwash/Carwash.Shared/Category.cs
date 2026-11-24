@@ -1,8 +1,11 @@
-﻿namespace Carwash.Shared;
+﻿using System.Text.Json.Serialization;
+
+namespace Carwash.Shared;
 
 /// <summary>
 /// Категория автомобиля
 /// </summary>
+[JsonConverter(typeof(JsonStringEnumConverter<Category>))]
 public enum Category
 {
     /// <summary>

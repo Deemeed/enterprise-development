@@ -39,8 +39,10 @@ public class ServiceEfCoreRepository(CarwashDbContext context) : IRepository<Ser
     /// <inheritdoc/>
     public async Task<Service> Update(Service entity)
     {
-        context.Services.Update(entity);
+        var service = await Read(entity.Id) ?? throw new KeyNotFoundException($"Услуга с Id={entity.Id} не существует");
+
+        context.Entry(service).CurrentValues.SetValues(entity);
         await context.SaveChangesAsync();
-        return (await Read(entity.Id))!;
+        return service;
     }
 }

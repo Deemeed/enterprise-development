@@ -1,9 +1,10 @@
-﻿using Carwash.Domain.Entities;
-using Carwash.Application.Contracts.Clients;
+﻿using Carwash.Application.Contracts.Analytics;
 using Carwash.Application.Contracts.Cars;
-using Carwash.Application.Contracts.Services;
+using Carwash.Application.Contracts.Clients;
 using Carwash.Application.Contracts.Orders;
-using Carwash.Application.Contracts.Analytics;
+using Carwash.Application.Contracts.Services;
+using Carwash.Domain.Entities;
+using Carwash.Shared;
 
 namespace Carwash.Application;
 
@@ -95,7 +96,7 @@ public static class Mapper
     /// <param name="dto">Объект с данными для создания или обновления услуги.</param>
     /// <returns>Новый экземпляр Service.</returns>
     public static Service Map(ServiceCreateUpdateDto dto) =>
-        new() { Id = 0, Name = dto.Name, Price = dto.Price, Category = dto.Category, DurationInMinutes = dto.DurationInMinutes };
+        new() { Id = 0, Name = dto.Name, Price = dto.Price, Category = ParseCategory(dto.Category), DurationInMinutes = dto.DurationInMinutes };
 
     /// <summary>
     /// Создает новый экземпляр Order на основе данных из OrderCreateUpdateDto.
@@ -134,4 +135,22 @@ public static class Mapper
     /// <returns>Экземпляр ServiceRevenueDto, содержащий данные сервиса и выручку.</returns>
     public static ServiceRevenueDto Map(Service Service, decimal TotalRevenue) =>
         new(Map(Service), TotalRevenue);
+
+    /// <summary>
+    /// Парсит категорию из строки в int, в случае ошибки ввода выкидывает исключение со списком возможных значений
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    private static Category ParseCategory(string value)
+    {
+        if (!int.TryParse(value, out _) &&
+            Enum.TryParse<Category>(value, ignoreCase: true, out var category) &&
+            Enum.IsDefined(category))
+        {
+            return category;
+        }
+
+        throw new ArgumentException($"Категория '{value}' не существует. Возможные значения: {string.Join(", ", Enum.GetNames<Category>())}");
+    }
 }

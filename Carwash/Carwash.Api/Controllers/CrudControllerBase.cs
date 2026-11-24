@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Carwash.Application.Contracts;
+﻿using Carwash.Application.Contracts;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Carwash.Api.Controllers;
 
@@ -52,7 +53,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         try
         {
             var result = await applicationService.ReadAll();
-            return result == null ? NotFound() : Ok(result);
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -69,13 +70,22 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     [HttpPost]
     [ProducesResponseType(201)]
     [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
     [ProducesResponseType(500)]
     public async Task<ActionResult<TDto>> Create(TCreateUpdateDto dto)
     {
         try
         {
             var result = await applicationService.Create(dto);
-            return result == null ? BadRequest() : CreatedAtAction(nameof(Get), result);
+            return StatusCode(201, result);
+        }
+        catch(KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
@@ -92,6 +102,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <returns>Обновленный объект</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
     [ProducesResponseType(404)]
     [ProducesResponseType(500)]
     public async Task<ActionResult<TDto>> Update(TKey id, TCreateUpdateDto dto)
@@ -99,7 +110,15 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         try
         {
             var result = await applicationService.Update(dto, id);
-            return result == null ? NotFound() : Ok(result);
+            return Ok(result);
+        }
+        catch(KeyNotFoundException ex)
+        {
+            return NotFound(ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
@@ -114,7 +133,7 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
     /// <param name="id">Id объекта</param>
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]
-    [ProducesResponseType(404)]
+    [ProducesResponseType(409)]
     [ProducesResponseType(500)]
     public async Task<IActionResult> Delete(TKey id)
     {
@@ -122,6 +141,11 @@ public abstract class CrudControllerBase<TDto, TCreateUpdateDto, TKey>(
         {
             var result = await applicationService.Delete(id);
             return NoContent();
+        }
+        catch (DbUpdateException ex)
+        {
+            logger.LogWarning(ex, "Conflict occurred while deleting entity.");
+            return Conflict("Cannot delete the object - there are related records.");
         }
         catch (Exception ex)
         {

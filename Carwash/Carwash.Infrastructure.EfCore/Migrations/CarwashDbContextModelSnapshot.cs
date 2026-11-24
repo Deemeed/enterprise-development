@@ -27,29 +27,29 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Brand")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("brand");
+                        .HasColumnName("Brand");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnName("ClientId");
 
                     b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("license_plate");
+                        .HasColumnName("LicensePlate");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("cars");
+                    b.ToTable("Cars");
 
                     b.HasData(
                         new
@@ -107,6 +107,20 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                             Brand = "Range Rover",
                             ClientId = 1,
                             LicensePlate = "О888ОО"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = "Skoda",
+                            ClientId = 8,
+                            LicensePlate = "Р999РР"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Brand = "Kia",
+                            ClientId = 9,
+                            LicensePlate = "Т101ТТ"
                         });
                 });
 
@@ -115,23 +129,23 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("full_name");
+                        .HasColumnName("FullName");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("phone_number");
+                        .HasColumnName("PhoneNumber");
 
                     b.HasKey("Id");
 
-                    b.ToTable("clients");
+                    b.ToTable("Clients");
 
                     b.HasData(
                         new
@@ -175,6 +189,24 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                             Id = 7,
                             FullName = "Сергей Волков",
                             PhoneNumber = "+79990000007"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FullName = "Ольга Морозова",
+                            PhoneNumber = "+79990000008"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FullName = "Николай Новиков",
+                            PhoneNumber = "+79990000009"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FullName = "Татьяна Соколова",
+                            PhoneNumber = "+799900000010"
                         });
                 });
 
@@ -183,29 +215,29 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BoxNumber")
                         .HasColumnType("int")
-                        .HasColumnName("box_number");
+                        .HasColumnName("BoxNumber");
 
                     b.Property<int>("CarId")
                         .HasColumnType("int")
-                        .HasColumnName("car_id");
+                        .HasColumnName("CarId");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int")
-                        .HasColumnName("client_id");
+                        .HasColumnName("ClientId");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int")
-                        .HasColumnName("service_id");
+                        .HasColumnName("ServiceId");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2")
-                        .HasColumnName("start_time");
+                        .HasColumnName("StartTime");
 
                     b.HasKey("Id");
 
@@ -215,7 +247,7 @@ namespace Carwash.Infrastructure.EfCore.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("orders");
+                    b.ToTable("Orders");
 
                     b.HasData(
                         new
@@ -424,6 +456,51 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                             ClientId = 3,
                             ServiceId = 2,
                             StartTime = new DateTime(2026, 9, 24, 11, 45, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            BoxNumber = 2,
+                            CarId = 9,
+                            ClientId = 8,
+                            ServiceId = 6,
+                            StartTime = new DateTime(2026, 9, 21, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            BoxNumber = 3,
+                            CarId = 10,
+                            ClientId = 9,
+                            ServiceId = 7,
+                            StartTime = new DateTime(2026, 9, 21, 15, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            BoxNumber = 4,
+                            CarId = 7,
+                            ClientId = 7,
+                            ServiceId = 8,
+                            StartTime = new DateTime(2026, 9, 22, 13, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 27,
+                            BoxNumber = 5,
+                            CarId = 9,
+                            ClientId = 8,
+                            ServiceId = 9,
+                            StartTime = new DateTime(2026, 9, 22, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 28,
+                            BoxNumber = 3,
+                            CarId = 10,
+                            ClientId = 9,
+                            ServiceId = 10,
+                            StartTime = new DateTime(2026, 9, 23, 13, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -432,30 +509,30 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("id");
+                        .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Category")
                         .HasColumnType("int")
-                        .HasColumnName("category");
+                        .HasColumnName("Category");
 
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int")
-                        .HasColumnName("duration_in_minutes");
+                        .HasColumnName("DurationInMinutes");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnName("name");
+                        .HasColumnName("Name");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnName("price");
+                        .HasColumnName("Price");
 
                     b.HasKey("Id");
 
-                    b.ToTable("services");
+                    b.ToTable("Services");
 
                     b.HasData(
                         new
@@ -497,6 +574,46 @@ namespace Carwash.Infrastructure.EfCore.Migrations
                             DurationInMinutes = 150,
                             Name = "Люкс-мойка",
                             Price = 4000m
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = 0,
+                            DurationInMinutes = 45,
+                            Name = "Мойка двигателя",
+                            Price = 1200m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = 1,
+                            DurationInMinutes = 120,
+                            Name = "Химчистка салона",
+                            Price = 5000m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = 2,
+                            DurationInMinutes = 180,
+                            Name = "Полировка кузова",
+                            Price = 6000m
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = 0,
+                            DurationInMinutes = 40,
+                            Name = "Мойка днища",
+                            Price = 1000m
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = 2,
+                            DurationInMinutes = 240,
+                            Name = "Нанокерамика",
+                            Price = 7000m
                         });
                 });
 

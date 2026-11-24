@@ -39,8 +39,10 @@ public class OrderEfCoreRepository(CarwashDbContext context) : IRepository<Order
     /// <inheritdoc/>
     public async Task<Order> Update(Order entity)
     {
-        context.Orders.Update(entity);
+        var order = await Read(entity.Id) ?? throw new KeyNotFoundException($"Заказ с Id={entity.Id} не существует");
+
+        context.Entry(order).CurrentValues.SetValues(entity);
         await context.SaveChangesAsync();
-        return (await Read(entity.Id))!;
+        return order;
     }
 }
